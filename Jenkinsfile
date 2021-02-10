@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh(script: "ls -la")
+                    sh(script: "source /etc/profile; docker container ls")
                 }
             }
         }
