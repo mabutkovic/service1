@@ -33,7 +33,22 @@ pipeline {
             parallel {
                 stage('Project1') {
                     stages {
-                        stage('Non-Parallel Stage') {
+                        stage('Deploy to Staging') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
+                        }
+                        stage('Smoke Test') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
+                        }
+                        stage('End to End Test') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
+                        }
+                        stage('Deploy to Production') {
                             steps {
                                 echo "Executing this stage first"
                             }
@@ -41,10 +56,26 @@ pipeline {
                     }
                 }
                 stage('Project2') {
-                    steps {
-                        script {
-                            echo "test_2"
-                            sh(script: "date -u")
+                    stages {
+                        stage('Deploy to Staging') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
+                        }
+                        stage('Smoke Test') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
+                        }
+                        stage('End to End Test') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
+                        }
+                        stage('Deploy to Production') {
+                            steps {
+                                echo "Executing this stage first"
+                            }
                         }
                     }
                 }
