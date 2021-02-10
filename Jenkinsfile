@@ -7,8 +7,8 @@ pipeline {
             }
             steps {
                 script {
-                    sh(script: "source /etc/profile; docker build . -t mbutkovic/service1")
-                    sh(script: "source /etc/profile; docker push mabutkovic/service1")
+                    sh(script: "source /etc/profile; docker build . -t mbutkovic/service1:$VERSION_NUMBER")
+                    sh(script: "source /etc/profile; docker push mabutkovic/service1:$VERSION_NUMBER")
                     sh(script: "source /etc/profile; echo $VERSION_NUMBER")
                 }
             }
