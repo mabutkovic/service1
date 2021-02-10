@@ -4,7 +4,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh(script: "date -u")
+                    sh(script: "docker container ls")
                 }
             }
         }
