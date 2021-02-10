@@ -4,7 +4,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh(script: "source /etc/profile; docker container ls")
+                    sh(script: "source /etc/profile; docker build . -t mbutkovic/service1")
+                    sh(script: "source /etc/profile; docker push mabutkovic/service1")
                 }
             }
         }
