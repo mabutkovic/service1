@@ -1,103 +1,45 @@
 pipeline {
     agent any
     stages {
-        stage('Parallel Stage') {
-            parallel(
-                    stages {
-                        stage('Build') {
-                            // project 1
-                            // pull git
-                            // build dockerfile image
-                            // push image
-                            // apply deployment on k8s dev
-                            steps {
-                                sh 'ls -la'
+        stage('single run') {
+            parallel {
+                stage('Parallel Test 1') {
+                    steps {
+                        script {
+                            def group1 = [:]
+                            group1["test_1"] = {
+                                echo "test_1"
+                                sh(script: "date -u")
+                                build(job: 'jenkins_job_1')
                             }
-                        }
-                        stage('Unit Test') {
-                            steps {
-                                sh 'ls'
+                            group1["test_2"] = {
+                                echo "test_2"
+                                sh(script: "date -u")
+                                build(job: 'jenkins_job_2')
                             }
-                        }
-                        stage('Integration Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Publish Artifact') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Deploy to staging') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Smoke Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('End to End Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Deploy to Production ') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                    },
-                    stages {
-                        stage('Build') {
-                            // project 2
-                            // pull git
-                            // build dockerfile image
-                            // push image
-                            // apply deployment on k8s dev
-                            steps {
-                                sh 'ls -la'
-                            }
-                        }
-                        stage('Unit Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Integration Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Publish Artifact') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Deploy to staging') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Smoke Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('End to End Test') {
-                            steps {
-                                sh 'ls'
-                            }
-                        }
-                        stage('Deploy to Production') {
-                            steps {
-                                sh 'ls'
-                            }
+                            parallel group1
                         }
                     }
-            )
+                }
+                stage('Parallel Test 2') {
+                    steps {
+                        script {
+                            def group2 = [:]
+                            group2["test_3"] = {
+                                echo "test_3"
+                                sh(script: "date -u")
+                                build(job: 'jenkins_job_3')
+                            }
+                            group2["test_4"] = {
+                                echo "test_4"
+                                sh(script: "date -u")
+                                build(job: 'jenkins_job_4')
+                            }
+                            parallel group2
+                        }
+                    }
+                }
+            }
         }
     }
 }
