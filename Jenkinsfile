@@ -1,27 +1,99 @@
 pipeline {
-    agent none
-    stages {
-        stage('Run Tests') {
-            parallel {
-                stage('Test1') {
-                    agent {
-                        label "project1"
-                    }
+    agent any
+    parallel(
+            stages {
+                stage('Build') {
+                    // project 1
+                    // pull git
+                    // build dockerfile image
+                    // push image
+                    // apply deployment on k8s dev
                     steps {
-                        sh "ls"
+                        sh 'ls -la'
                     }
-                    
                 }
-                stage('Test2') {
-                    agent {
-                        label "project2"
-                    }
+                stage('Unit Test') {
                     steps {
-                        sh "ls"
+                        sh 'ls'
                     }
-
+                }
+                stage('Integration Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Publish Artifact') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Deploy to staging') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Smoke Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('End to End Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Deploy to Production') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+            },
+            stages {
+                stage('Build') {
+                    // project 2
+                    // pull git
+                    // build dockerfile image
+                    // push image
+                    // apply deployment on k8s dev
+                    steps {
+                        sh 'ls -la'
+                    }
+                }
+                stage('Unit Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Integration Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Publish Artifact') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Deploy to staging') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Smoke Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('End to End Test') {
+                    steps {
+                        sh 'ls'
+                    }
+                }
+                stage('Deploy to Production') {
+                    steps {
+                        sh 'ls'
+                    }
                 }
             }
-        }
-    }
+    )
 }
