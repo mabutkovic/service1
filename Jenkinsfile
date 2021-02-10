@@ -44,7 +44,7 @@ pipeline {
                                 sh 'ls'
                             }
                         }
-                        stage('Deploy to Production') {
+                        stage('Deploy to Production ') {
                             steps {
                                 sh 'ls'
                             }
