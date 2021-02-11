@@ -1,3 +1,5 @@
+def list_projects = ["p1", "p2"]
+def list_environments = ["staging", "prod"]
 pipeline {
     agent any
     environment {
@@ -33,57 +35,32 @@ pipeline {
                 }
             }
         }
-        stage('Projects') {
-            parallel {
-                stage('Project1') {
-                    stages {
-                        stage('Deploy to Staging') {
-                            steps {
-                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p1.staging.yaml p1-staging-service1-workflow ./service1-workflow")
+
+        steps {
+            script {
+                for (int i = 0; i < list_projects.size(); i++) {
+                    for (int j = 0; j < list_environments.size(); j++) {
+                        stages {
+                            stage(list_projects[i] + list_environments[j] + ' Deploy to Staging') {
+                                steps {
+                                    sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values." + list_projects[i] + "." + list_environments[j] + ".yaml " + list_projects[i] + "-" + list_environments[j] + "-service1-workflow ./service1-workflow")
+                                }
                             }
-                        }
-                        stage('Smoke Test') {
-                            steps {
-                                echo "Executing this stage first"
+                            stage(list_projects[i] + list_environments[j] + ' Smoke Test') {
+                                steps {
+                                    echo "Executing"
+                                }
                             }
-                        }
-                        stage('End to End Test') {
-                            steps {
-                                echo "Executing this stage first"
-                            }
-                        }
-                        stage('Deploy to Production') {
-                            steps {
-                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p1.prod.yaml p1-prod-service1-workflow ./service1-workflow")
-                            }
-                        }
-                    }
-                }
-                stage('Project2') {
-                    stages {
-                        stage('Deploy to Staging') {
-                            steps {
-                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p2.staging.yaml p2-staging-service1-workflow ./service1-workflow")
-                            }
-                        }
-                        stage('Smoke Test') {
-                            steps {
-                                echo "Executing this stage first"
-                            }
-                        }
-                        stage('End to End Test') {
-                            steps {
-                                echo "Executing this stage first"
-                            }
-                        }
-                        stage('Deploy to Production') {
-                            steps {
-                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p2.prod.yaml p2-prod-service1-workflow ./service1-workflow")
+                            stage(list_projects[i] + list_environments[j] + ' End to End Test') {
+                                steps {
+                                    echo "Executing"
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
     }
 }
