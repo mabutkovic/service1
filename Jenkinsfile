@@ -48,16 +48,18 @@ pipeline {
                                 sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values." + list_projects[i] + "." + list_environments[j] + ".yaml " + list_projects[i] + "-" + list_environments[j] + "-service1-workflow ./service1-workflow")
                             }
                             stage(list_projects[i] + '-' + list_environments[j] + ' Smoke Test') {
-                                when {
-                                    expression { list_environments[j] != 'staging' }
+                                script {
+                                    if (list_environments[j] == 'staging') {
+                                        echo "Executing"
+                                    }
                                 }
-                                echo "Executing"
                             }
                             stage(list_projects[i] + '-' + list_environments[j] + ' End to End Test') {
-                                when {
-                                    expression { list_environments[j] != 'staging' }
+                                script {
+                                    if (list_environments[j] == 'staging') {
+                                        echo "Executing"
+                                    }
                                 }
-                                echo "Executing"
                             }
 
                         }
