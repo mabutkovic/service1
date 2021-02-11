@@ -64,7 +64,7 @@ pipeline {
                     stages {
                         stage('Deploy to Staging') {
                             steps {
-                                echo "Executing this stage first"
+                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p2.staging.yaml p2-staging-service1-workflow ./service1-workflow")
                             }
                         }
                         stage('Smoke Test') {
@@ -79,7 +79,7 @@ pipeline {
                         }
                         stage('Deploy to Production') {
                             steps {
-                                echo "Executing this stage first"
+                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p2.prod.yaml p2-prod-service1-workflow ./service1-workflow")
                             }
                         }
                     }
