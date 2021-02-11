@@ -1,9 +1,9 @@
 pipeline {
     agent any
+    environment {
+        VERSION_NUMBER = sh(script: 'cat version.txt ', returnStdout: true).trim()
+    }
     stages {
-        environment {
-            VERSION_NUMBER = sh(script: 'cat version.txt ', returnStdout: true).trim()
-        }
         stage('Build') {
             steps {
                 script {
