@@ -8,7 +8,6 @@ pipeline {
             steps {
                 script {
                     sh(script: "source /etc/profile; docker build . -t mabutkovic/service1:$VERSION_NUMBER")
-                    sh(script: "source /etc/profile; docker push mabutkovic/service1:$VERSION_NUMBER")
                     sh(script: "source /etc/profile; echo $VERSION_NUMBER")
                 }
             }
@@ -30,7 +29,7 @@ pipeline {
         stage('Publish Artifact') {
             steps {
                 script {
-                    sh(script: "date -u")
+                    sh(script: "source /etc/profile; docker push mabutkovic/service1:$VERSION_NUMBER")
                 }
             }
         }
