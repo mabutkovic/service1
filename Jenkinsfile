@@ -7,7 +7,7 @@ pipeline {
             }
             steps {
                 script {
-                    sh(script: "source /etc/profile; docker build . -t mbutkovic/service1:$VERSION_NUMBER")
+                    sh(script: "source /etc/profile; docker build . -t mabutkovic/service1:$VERSION_NUMBER")
                     sh(script: "source /etc/profile; docker push mabutkovic/service1:$VERSION_NUMBER")
                     sh(script: "source /etc/profile; echo $VERSION_NUMBER")
                 }
@@ -40,7 +40,7 @@ pipeline {
                     stages {
                         stage('Deploy to Staging') {
                             steps {
-                                echo "Executing this stage first"
+                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p1.staging.yaml p1-staging-service1-workflow ./service1-workflow")
                             }
                         }
                         stage('Smoke Test') {
@@ -55,7 +55,7 @@ pipeline {
                         }
                         stage('Deploy to Production') {
                             steps {
-                                echo "Executing this stage first"
+                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values.p1.prod.yaml p1-prod-service1-workflow ./service1-workflow")
                             }
                         }
                     }
