@@ -7,6 +7,36 @@ pipeline {
     }
     stages {
 
+        stage('Build') {
+            steps {
+                script {
+                    sh(script: "source /etc/profile; docker build . -t mabutkovic/service1:$VERSION_NUMBER")
+                    sh(script: "source /etc/profile; echo $VERSION_NUMBER")
+                }
+            }
+        }
+        stage('Unit Test') {
+            steps {
+                script {
+                    sh(script: "date -u")
+                }
+            }
+        }
+        stage('Integration Test') {
+            steps {
+                script {
+                    sh(script: "date -u")
+                }
+            }
+        }
+        stage('Publish Artifact') {
+            steps {
+                script {
+                    sh(script: "source /etc/profile; docker push mabutkovic/service1:$VERSION_NUMBER")
+                }
+            }
+        }
+
         stage('Deployment Stage') {
 
             steps {
