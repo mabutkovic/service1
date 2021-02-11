@@ -1,10 +1,10 @@
 pipeline {
     agent any
     stages {
+        environment {
+            VERSION_NUMBER = sh(script: 'cat version.txt ', returnStdout: true).trim()
+        }
         stage('Build') {
-            environment {
-                VERSION_NUMBER = sh(script: 'cat version.txt ', returnStdout: true).trim()
-            }
             steps {
                 script {
                     sh(script: "source /etc/profile; docker build . -t mabutkovic/service1:$VERSION_NUMBER")
