@@ -45,7 +45,7 @@ pipeline {
                         for (int j = 0; j < list_environments.size(); j++) {
 
                             stage(list_projects[i] + '-' + list_environments[j] + ' deploy') {
-                                sh(script: "source /etc/profile; helm upgrade --set version=$VERSION_NUMBER -f service1-workflow/values." + list_projects[i] + "." + list_environments[j] + ".yaml " + list_projects[i] + "-" + list_environments[j] + "-service1-workflow ./service1-workflow")
+                                sh(script: "source /etc/profile; helm upgrade --install --set version=$VERSION_NUMBER -f service1-workflow/values." + list_projects[i] + "." + list_environments[j] + ".yaml " + list_projects[i] + "-" + list_environments[j] + "-service1-workflow ./service1-workflow")
                             }
                             if (list_environments[j] == 'staging') {
                                 stage(list_projects[i] + '-' + list_environments[j] + ' Smoke Test') {
