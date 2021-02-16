@@ -1,7 +1,7 @@
 import sys
 import hashlib
-import sys
 
+print(sys.version)
 sys.setdefaultencoding('utf-8')
 
 inp = sys.stdin.readlines()
