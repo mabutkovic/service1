@@ -7,6 +7,6 @@ message = '\n'.join(inp[1:]).strip()
 
 h = hashlib.new(hash_func)
 message = message.decode('iso-8859-2')
-h.update(str.encode(message))
+h.update(str(message))
 
 print h.hexdigest()
